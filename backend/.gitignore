@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Custom Sensitive Files ###
+**/src/main/resources/application.properties
+**/src/main/resources/application.yml
+.env
