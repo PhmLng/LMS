@@ -21,8 +21,8 @@ public class PublisherServiceImpl implements PublisherService {
     private final PublisherMapper publisherMapper;
 
     @Override
-    public Page<PublisherResponse> getAllPublishers(Pageable pageable) {
-        Page<Publisher> publishers = publisherRepository.findAll(pageable);
+    public Page<PublisherResponse> getAllPublishers(Pageable pageable,String name) {
+        Page<Publisher> publishers = publisherRepository.getAllPublishers(pageable,name);
         Page<PublisherResponse> publisherResponses = publishers.map(publisher -> publisherMapper.toPublisherResponse(publisher));
         return publisherResponses;
     }

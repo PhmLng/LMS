@@ -29,9 +29,10 @@ public class Reader {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
+
     @OneToOne(mappedBy = "reader", cascade = CascadeType.ALL)
     private LibraryCard libraryCard;
 }

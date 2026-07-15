@@ -1,0 +1,595 @@
+/* ============================================================
+   src/pages/BookManagement/BookManagement.css
+   Tone: nền #f8fafc · accent navy #0d2461
+   ============================================================ */
+
+/* ── Wrapper trang ── */
+.bm-page {
+    padding: 32px 36px 56px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: "Segoe UI", "Inter", Arial, sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE HEADER
+   ═══════════════════════════════════════════════════════════ */
+.bm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.bm-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.bm-subtitle {
+    font-size: 13.5px;
+    color: #64748b;
+    margin: 0;
+}
+
+.bm-subtitle strong {
+    color: #0d2461;
+}
+
+/* Nút Thêm sách mới */
+.bm-btn-add.ant-btn {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 42px !important;
+    padding: 0 22px !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(13, 36, 97, .25) !important;
+    transition: background .18s !important;
+}
+
+.bm-btn-add.ant-btn:hover {
+    background: #0a1d50 !important;
+    border-color: #0a1d50 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOOLBAR  (Search + Filter button)
+   ═══════════════════════════════════════════════════════════ */
+.bm-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e8edf5;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Ô tìm kiếm */
+.bm-search {
+    flex: 1;
+}
+
+.bm-search.ant-input-affix-wrapper {
+    border-radius: 8px !important;
+    border-color: #e8edf5 !important;
+    font-size: 14px !important;
+    height: 42px !important;
+}
+
+.bm-search.ant-input-affix-wrapper:focus,
+.bm-search.ant-input-affix-wrapper-focused {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+.search-icon {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+/* Nút Lọc dữ liệu */
+.bm-btn-filter.ant-btn {
+    border-radius: 8px !important;
+    border-color: #e2e8f0 !important;
+    color: #475569 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    height: 42px !important;
+    padding: 0 18px !important;
+    background: #f8fafc !important;
+    white-space: nowrap;
+    transition: all .18s !important;
+}
+
+.bm-btn-filter.ant-btn:hover {
+    border-color: #0d2461 !important;
+    color: #0d2461 !important;
+    background: #f1f5ff !important;
+}
+
+/* Trạng thái active — panel đang mở */
+.bm-btn-filter.ant-btn.is-active {
+    border-color: #0d2461 !important;
+    background: #eef2ff !important;
+    color: #0d2461 !important;
+    font-weight: 600 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FILTER PANEL
+   ═══════════════════════════════════════════════════════════ */
+.bm-filter-panel {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #e8edf5;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    animation: panelFadeIn .18s ease-out;
+}
+
+@keyframes panelFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.filter-select {
+    width: 200px !important;
+}
+
+.filter-select .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #e2e8f0 !important;
+    font-size: 14px !important;
+    height: 42px !important;
+    align-items: center !important;
+}
+
+.filter-select.ant-select-focused .ant-select-selector {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+.filter-count {
+    margin-left: auto;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.filter-count strong {
+    color: #0d2461;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLE WRAPPER
+   ═══════════════════════════════════════════════════════════ */
+.bm-table-wrap {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e8edf5;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Header hàng tiêu đề ── */
+.bm-table .ant-table-thead>tr>th {
+    background: #f8fafc !important;
+    color: #64748b !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.09em !important;
+    border-bottom: 1px solid #e8edf5 !important;
+    padding: 14px 16px !important;
+}
+
+/* ── Body row ── */
+.bm-table .ant-table-tbody>tr>td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    vertical-align: middle !important;
+}
+
+.bm-table .ant-table-tbody>tr:hover>td {
+    background: #f8faff !important;
+}
+
+.bm-table .ant-table-tbody>tr:last-child>td {
+    border-bottom: none !important;
+}
+
+/* ── Ảnh bìa thật (khi có URL) ── */
+.book-thumb {
+    width: 55px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Avatar chữ cái (khi không có ảnh) ── */
+.book-avatar {
+    width: 55px;
+    height: 75px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    /* chữ cái đủ to, dễ đọc */
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.05em;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+/* ── Thông tin sách ── */
+.book-info-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.book-title-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d2461;
+    cursor: pointer;
+    line-height: 1.4;
+    transition: color .15s;
+    display: inline-block;
+}
+
+.book-title-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.book-isbn {
+    font-size: 11.5px;
+    color: #94a3b8;
+    font-family: "Consolas", "Courier New", monospace;
+    letter-spacing: 0.04em;
+}
+
+/* ── Các cell text thường ── */
+.cell-text {
+    font-size: 13.5px;
+    color: #374151;
+}
+
+/* ── Số lượng ── */
+.cell-quantity {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0d2461;
+}
+
+.cell-quantity.zero {
+    color: #ef4444;
+}
+
+/* Hết hàng → đỏ */
+
+/* ── Tag trạng thái ── */
+.status-tag.ant-tag {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.07em !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    border: none !important;
+    line-height: 1.7 !important;
+    white-space: nowrap;
+}
+
+/* ── Nút thao tác ── */
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background .15s, color .15s, border-color .15s;
+}
+
+/* Xem — xanh dương */
+.action-btn.view {
+    color: #3b82f6;
+}
+
+.action-btn.view:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+
+/* Sửa — xám trung tính */
+.action-btn.edit {
+    color: #64748b;
+}
+
+.action-btn.edit:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0d2461;
+}
+
+/* Xóa — đỏ */
+.action-btn.delete {
+    color: #ef4444;
+}
+
+.action-btn.delete:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+/* ── Pagination ── */
+.bm-table .ant-pagination {
+    padding: 16px 0 4px !important;
+    margin: 0 !important;
+}
+
+.bm-table .ant-pagination-item-active {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+}
+
+.bm-table .ant-pagination-item-active a {
+    color: #fff !important;
+}
+
+.bm-table .ant-pagination-item:hover {
+    border-color: #0d2461 !important;
+}
+
+.bm-table .ant-pagination-item:hover a {
+    color: #0d2461 !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .bm-page {
+        padding: 20px 16px 40px;
+    }
+
+    .bm-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .filter-select {
+        width: 100% !important;
+    }
+}
+
+/* ── Nút Tìm kiếm (submit) ── */
+.bm-btn-search-submit.ant-btn {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 42px !important;
+    padding: 0 20px !important;
+    color: #fff !important;
+    white-space: nowrap;
+    transition: background .18s !important;
+}
+
+.bm-btn-search-submit.ant-btn:hover {
+    background: #0a1d50 !important;
+    border-color: #0a1d50 !important;
+}
+
+/* ── Nút Áp dụng bộ lọc ── */
+.bm-btn-apply.ant-btn {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 42px !important;
+    padding: 0 20px !important;
+    color: #fff !important;
+    transition: background .18s !important;
+}
+
+.bm-btn-apply.ant-btn:hover {
+    background: #0a1d50 !important;
+    border-color: #0a1d50 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODAL THÊM SÁCH MỚI
+   ═══════════════════════════════════════════════════════════ */
+
+/* Header Modal */
+.add-book-modal .ant-modal-header {
+    border-bottom: 1px solid #f0f4f9 !important;
+    padding: 18px 24px 16px !important;
+}
+
+.add-book-modal .ant-modal-title {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: #0d2461 !important;
+}
+
+.add-book-modal .ant-modal-content {
+    border-radius: 14px !important;
+    overflow: hidden;
+}
+
+/* Form bên trong modal */
+.add-book-form {
+    padding: 4px 0 0;
+}
+
+.add-book-form .ant-form-item-label>label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.add-book-form .ant-input,
+.add-book-form .ant-input-number,
+.add-book-form .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #e2e8f0 !important;
+    font-size: 14px !important;
+}
+
+.add-book-form .ant-input:focus,
+.add-book-form .ant-input-number:focus,
+.add-book-form .ant-input-number-focused,
+.add-book-form .ant-select-focused .ant-select-selector {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+/* Layout 2 cột trong form */
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Footer nút Hủy / Thêm sách */
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f4f9;
+    margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   IMAGE UPLOAD WIDGET
+   ═══════════════════════════════════════════════════════════ */
+
+/* Wrapper ngang: preview bên trái, controls bên phải */
+.image-upload-wrapper {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+/* Vùng preview ảnh — hình chữ nhật đứng như bìa sách */
+.image-preview-box {
+    width: 100px;
+    height: 134px;
+    border-radius: 8px;
+    border: 1.5px dashed #e2e8f0;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: border-color .2s;
+}
+
+.image-preview-box:hover {
+    border-color: #0d2461;
+}
+
+.image-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 6px;
+}
+
+.image-preview-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+}
+
+.image-preview-empty span {
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+}
+
+.image-preview-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.image-preview-loading span {
+    font-size: 11px;
+    color: #0d2461;
+}
+
+/* Controls: nút upload + input URL + nút xóa */
+.image-upload-controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.image-upload-controls .ant-upload {
+    display: block;
+    width: 100%;
+}
+
+/* ── Số lượng còn lại / tổng ── */
+.cell-quantity {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0d2461;
+}
+
+.cell-quantity.zero {
+    color: #ef4444;
+}
+
+/* hết sách */
+.cell-quantity.low {
+    color: #f59e0b;
+}
+
+/* sắp hết (< 20%) */
+
+.quantity-separator {
+    margin: 0 2px;
+    color: #94a3b8;
+    font-weight: 400;
+}

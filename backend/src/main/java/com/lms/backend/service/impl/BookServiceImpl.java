@@ -9,10 +9,7 @@ import com.lms.backend.entity.Book;
 import com.lms.backend.entity.Category;
 import com.lms.backend.entity.Publisher;
 import com.lms.backend.mapper.BookMapper;
-import com.lms.backend.repository.AuthorRepository;
-import com.lms.backend.repository.BookRepository;
-import com.lms.backend.repository.CategoryRepository;
-import com.lms.backend.repository.PublisherRepository;
+import com.lms.backend.repository.*;
 import com.lms.backend.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +26,7 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final BookCopyRepository bookCopyRepository;
     private final BookMapper bookMapper;
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
@@ -37,7 +35,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<BookResponse> getAllBooks(Pageable pageable) {
         Page<Book> books = bookRepository.findAllByIsDeletedFalse(pageable);
-        Page<BookResponse> bookResponses = books.map((book -> bookMapper.toBookResponse(book)));
+        Page<BookResponse> bookResponses = books.map((book -> {
+            BookResponse bookResponse = bookMapper.toBookResponse(book);
+            int quantity = bookCopyRepository.countByBookIdAndIsDeleted(book.getId(), false);
+            int borrowedQuantity = bookCopyRepository.countRemainingQuantity(book.getId());
+            bookResponse.setQuantity(quantity);
+            bookResponse.setRemainingQuantity(quantity - borrowedQuantity);
+            return bookResponse;
+        }));
         return bookResponses;
     }
 
@@ -99,7 +104,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<BookResponse> searchBook(FilterBookRequest filter, Pageable pageable) {
         Page<Book> books = bookRepository.filterBooks(filter.getTitle(), filter.getCategoryId(), filter.getPublishId(),filter.getStatus(), filter.getAuthorId(), pageable);
-        Page<BookResponse> bookResponses = books.map((book -> bookMapper.toBookResponse(book)));
-        return bookResponses;
+        return books.map((book -> {
+            BookResponse bookResponse = bookMapper.toBookResponse(book);
+
+            int quantity = bookCopyRepository.countByBookIdAndIsDeleted(book.getId(), false);
+            int borrowedQuantity = bookCopyRepository.countRemainingQuantity(book.getId());
+            bookResponse.setQuantity(quantity);
+            bookResponse.setRemainingQuantity(quantity - borrowedQuantity);
+            return bookResponse;
+        }));
     }
 }

@@ -1,6 +1,7 @@
 package com.lms.backend.repository;
 
 import com.lms.backend.entity.Book;
+import com.lms.backend.enums.BookCopyStatus;
 import com.lms.backend.enums.BookStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,4 +45,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @EntityGraph(attributePaths = {"author", "publisher", "categories"})
     List<Book> findAllById(Iterable<Long> ids);
 
+    Long countByStatus(BookStatus status);
 }

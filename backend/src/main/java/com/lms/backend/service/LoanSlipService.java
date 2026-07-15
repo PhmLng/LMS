@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface LoanSlipService {
-    public Page<LoanSlipResponse> getLoanSlips(Long cardId,LoanStatus Status, Pageable pageable);
+    public Page<LoanSlipResponse> getLoanSlips(String cardId,LoanStatus Status, Pageable pageable);
     public LoanSlipResponse getLoanSlipById(Long id);
     public LoanSlipResponse createLoanSlip(BorrowRequest borrowRequest);
     public LoanSlipResponse updateLoanSlip(LoanSlip loanSlip);

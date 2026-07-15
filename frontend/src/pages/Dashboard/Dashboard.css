@@ -1,0 +1,265 @@
+/* ============================================================
+   src/pages/Dashboard/Dashboard.css
+   Style cho trang Tổng quan — khớp thiết kế ảnh tham chiếu.
+   Tone màu: nền #f8fafc, accent #0d2461 (navy)
+   ============================================================ */
+
+.dashboard-page {
+    padding: 32px 36px 48px;
+    width: 100%;
+    /* Fill toàn bộ vùng Content sau Sidebar */
+    box-sizing: border-box;
+    font-family: "Segoe UI", "Inter", Arial, sans-serif;
+}
+
+/* ── Page Header ── */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.dashboard-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.dashboard-subtitle {
+    font-size: 13.5px;
+    color: #64748b;
+    margin: 0;
+}
+
+.dashboard-header-actions {
+    display: flex;
+    align-items: center;
+    padding-top: 4px;
+}
+
+.bell-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid #e8edf5;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 17px;
+    color: #64748b;
+    transition: background .15s, color .15s;
+}
+
+.bell-btn:hover {
+    background: #f1f5ff;
+    color: #0d2461;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAT CARDS
+   ═══════════════════════════════════════════════════════════ */
+.stat-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 cột đều nhau, fill 100% chiều ngang */
+    gap: 18px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+@media (max-width: 1100px) {
+    .stat-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .stat-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-page {
+        padding: 20px 16px 40px;
+    }
+}
+
+.stat-card.ant-card {
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+    transition: box-shadow .2s, transform .2s;
+}
+
+.stat-card.ant-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09) !important;
+    transform: translateY(-2px);
+}
+
+.stat-card .ant-card-body {
+    padding: 20px 22px !important;
+}
+
+.stat-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+/* Icon wrapper */
+.stat-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+/* Badge % */
+.stat-badge {
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 3px 9px;
+}
+
+.stat-badge--positive {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.stat-badge--negative {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.stat-badge--neutral {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.stat-card-label {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 4px;
+    font-weight: 400;
+}
+
+.stat-card-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHART CARD
+   ═══════════════════════════════════════════════════════════ */
+.chart-card.ant-card {
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
+    width: 100%;
+}
+
+.chart-card .ant-card-body {
+    padding: 24px 28px !important;
+}
+
+.chart-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.chart-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0 0 4px;
+}
+
+.chart-subtitle {
+    font-size: 12.5px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* Toggle Tháng / Năm */
+.chart-toggle {
+    display: flex;
+    gap: 2px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.toggle-btn {
+    padding: 5px 16px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+
+.toggle-btn.active {
+    background: #ffffff;
+    color: #0d2461;
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Chart container */
+.chart-wrapper {
+    height: 440px;
+    width: 100%;
+}
+
+/* ── Skeleton số liệu trong StatCard khi loading ── */
+.stat-card-skeleton {
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #e8edf5 25%, #d4dcec 50%, #e8edf5 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    margin-top: 6px;
+    width: 60%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ── Căn giữa Spin / empty message trong chart ── */
+.chart-loading {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Badge "Trực tiếp" (info type) ── */
+.stat-badge--info {
+    background: #fef3c7;
+    color: #d97706;
+}

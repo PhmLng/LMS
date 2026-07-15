@@ -1,0 +1,36 @@
+/* src/index.css - CSS reset toàn cục */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Xóa sạch margin/padding mặc định của trình duyệt */
+html,
+body,
+#root {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Đảm bảo tính toán kích thước padding không làm phình màn hình */
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+/* Ant Design Form label full-width fix */
+.ant-form-item-label {
+    width: 100%;
+}
+
+.ant-form-item-label>label {
+    width: 100%;
+}

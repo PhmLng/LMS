@@ -3,9 +3,25 @@ CREATE TABLE accounts (
                           id BIGINT PRIMARY KEY AUTO_INCREMENT,
                           username VARCHAR(50) UNIQUE NOT NULL,
                           password VARCHAR(255) NOT NULL,
-                          role VARCHAR(20) NOT NULL,
                           status VARCHAR(20) NOT NULL,
                           created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+-- Bảng trung gian Role - Permission
+CREATE TABLE roles_permissions (
+                                   role_name VARCHAR(50) NOT NULL,
+                                   permission_name VARCHAR(50) NOT NULL,
+                                   PRIMARY KEY (role_name, permission_name),
+                                   CONSTRAINT fk_rp_role FOREIGN KEY (role_name) REFERENCES roles(name),
+                                   CONSTRAINT fk_rp_perm FOREIGN KEY (permission_name) REFERENCES permissions(permission)
+);
+
+-- Bảng trung gian Account - Role
+CREATE TABLE accounts_roles (
+                                account_id BIGINT NOT NULL,
+                                role_name VARCHAR(50) NOT NULL,
+                                PRIMARY KEY (account_id, role_name),
+                                CONSTRAINT fk_ar_account FOREIGN KEY (account_id) REFERENCES accounts(id),
+                                CONSTRAINT fk_ar_role FOREIGN KEY (role_name) REFERENCES roles(name)
 );
 
 CREATE TABLE authors (

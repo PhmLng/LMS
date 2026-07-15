@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class BookDetailResponse {
+    private long id;
     private String title;
     private String isbn;
     private String imageUrl;

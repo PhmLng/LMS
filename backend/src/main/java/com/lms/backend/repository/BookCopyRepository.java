@@ -23,12 +23,20 @@ public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
     Optional<BookCopy> findByBarcodeAndIsDeletedFalse(String barcode);
 
     @EntityGraph(attributePaths = {"book"})
-    @Query("SELECT bc FROM BookCopy bc WHERE "+
-            ":bookId IS NULL OR bc.book.id = :bookId AND "+
-            ":status IS NULL OR bc.status = :status AND "+
-            "bc.isDeleted=false "
+    @Query("SELECT bc FROM BookCopy bc WHERE " +
+            "(:bookId IS NULL OR bc.book.id = :bookId) AND " +  // Ép xử lý lọc Book trước
+            "(:status IS NULL OR bc.status = :status) AND " +    // Ép xử lý lọc Status sau
+            "bc.isDeleted = false"                               // Bốt chốt chặn cuối cùng!
     )
     Page<BookCopy> searchBookCopy(@Param("status") BookCopyStatus status,@Param("bookId") Long bookId, Pageable pageable);
+
     Long countByBookId(Long bookId);
     Boolean existsByBarcode(String barcode);
+    Long countByStatus(BookCopyStatus status);
+    int countByBookIdAndIsDeleted(Long bookId, boolean isDeleted);
+    @Query("SELECT COUNT (bc) FROM BookCopy bc WHERE "+
+            "bc.book.id = :bookId AND (bc.status = 'BORROWED' OR bc.status ='LOST') AND "+
+            "bc.isDeleted=false"
+    )
+    int countRemainingQuantity(Long bookId);
 }

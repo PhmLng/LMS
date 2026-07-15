@@ -1,0 +1,192 @@
+/* ============================================================
+   src/components/Header/Header.css
+   Style cho thanh Header - khớp với thiết kế navy blue trong ảnh.
+   ============================================================ */
+
+/* ===== HEADER BAR ===== */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1a3a8f;
+    /* Navy đậm đúng màu ảnh */
+    height: 56px;
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== LEFT: Logo + Nav ===== */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+/* Hình vuông trắng đại diện logo */
+.header-logo-box {
+    display: block;
+    width: 36px;
+    height: 36px;
+    background-color: #ffffff;
+    border-radius: 3px;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+}
+
+.header-logo-box:hover {
+    opacity: 0.85;
+}
+
+/* Navigation links */
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.92);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== RIGHT: User area ===== */
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Nút đăng nhập khi chưa login */
+.btn-login-header.ant-btn {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    height: 36px !important;
+    padding: 0 20px !important;
+    border-radius: 4px !important;
+    transition: background-color 0.2s !important;
+}
+
+.btn-login-header.ant-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    border-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Nút trigger dropdown user */
+.user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    padding: 5px 14px 5px 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #ffffff;
+}
+
+.user-trigger:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* Avatar chữ cái */
+.user-avatar.ant-avatar {
+    background-color: #2d55c8 !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    flex-shrink: 0;
+}
+
+.user-fullname {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-caret {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== DROPDOWN OVERLAY ===== */
+.user-dropdown-overlay .ant-dropdown-menu {
+    border-radius: 6px !important;
+    padding: 6px !important;
+    min-width: 200px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid #f0f0f0 !important;
+}
+
+.user-dropdown-overlay .ant-dropdown-menu-item {
+    border-radius: 4px !important;
+    padding: 9px 14px !important;
+    font-size: 14px !important;
+    color: #374151 !important;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.user-dropdown-overlay .ant-dropdown-menu-item:hover {
+    background-color: #f5f7ff !important;
+}
+
+/* Mục Đăng xuất (danger = true) */
+.user-dropdown-overlay .ant-dropdown-menu-item-danger {
+    color: #dc2626 !important;
+}
+
+.user-dropdown-overlay .ant-dropdown-menu-item-danger:hover {
+    background-color: #fff5f5 !important;
+}
+
+/* Mục Trang quản trị */
+.user-dropdown-overlay .menu-admin-item {
+    color: #1a3a8f !important;
+    font-weight: 600 !important;
+}
+
+.user-dropdown-overlay .menu-admin-item:hover {
+    background-color: #eff4ff !important;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+    .header-nav {
+        display: none;
+        /* Ẩn nav khi màn hình nhỏ */
+    }
+
+    .user-fullname {
+        display: none;
+    }
+
+    .app-header {
+        padding: 0 16px;
+    }
+}

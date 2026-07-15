@@ -1,0 +1,487 @@
+/* ============================================================
+   src/pages/FineManagement/FineManagement.css
+   ============================================================ */
+
+.fm-page {
+    padding: 32px 36px 56px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: "Segoe UI", "Inter", Arial, sans-serif;
+}
+
+/* ── Header ── */
+.fm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.fm-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.fm-subtitle {
+    font-size: 13.5px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ── Tabs ── */
+.fm-tabs.ant-tabs>.ant-tabs-nav {
+    margin-bottom: 20px;
+}
+
+.fm-tabs .ant-tabs-tab {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    padding: 10px 4px !important;
+}
+
+.fm-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #0d2461 !important;
+}
+
+.fm-tabs .ant-tabs-ink-bar {
+    background: #0d2461 !important;
+}
+
+/* ═══════════════════════════════════
+   TAB 1 — XỬ LÝ PHẠT TẠI QUẦY
+   ═══════════════════════════════════ */
+
+/* TẦNG 1 */
+.fm-stage1-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 240px);
+}
+
+.fm-scan-card.ant-card {
+    width: 520px;
+    border-radius: 20px !important;
+    border: 1px solid #e8edf5 !important;
+    box-shadow: 0 8px 40px rgba(13, 36, 97, 0.10) !important;
+    text-align: center;
+}
+
+.fm-scan-card .ant-card-body {
+    padding: 48px 40px 44px !important;
+}
+
+.fm-scan-icon-wrap {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #0d2461 0%, #1e40af 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(13, 36, 97, 0.25);
+}
+
+.fm-scan-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0 0 6px;
+}
+
+.fm-scan-desc {
+    font-size: 13.5px;
+    color: #94a3b8;
+    margin: 0 0 28px;
+    line-height: 1.6;
+}
+
+.fm-card-input.ant-input {
+    border-radius: 10px !important;
+    border-color: #e2e8f0 !important;
+    font-size: 16px !important;
+    font-family: "Consolas", "Courier New", monospace !important;
+    letter-spacing: 0.06em !important;
+    height: 52px !important;
+    text-align: center !important;
+}
+
+.fm-card-input.ant-input:focus {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 3px rgba(13, 36, 97, .12) !important;
+}
+
+.fm-card-input-hint {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.fm-enter-badge {
+    display: inline-flex;
+    align-items: center;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-family: monospace;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* TẦNG 2 */
+.fm-reader-alert.ant-alert {
+    border-radius: 12px !important;
+    border: 1px solid #bfdbfe !important;
+    background: #eff6ff !important;
+    padding: 12px 18px !important;
+    margin-bottom: 20px;
+}
+
+.fm-reader-alert .ant-alert-message {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.fm-reader-info-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fm-reader-info-text strong {
+    color: #0d2461;
+}
+
+.fm-change-btn.ant-btn {
+    border-color: #93c5fd !important;
+    color: #1e40af !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    height: 34px !important;
+    background: #fff !important;
+    flex-shrink: 0;
+}
+
+.fm-change-btn.ant-btn:hover {
+    border-color: #0d2461 !important;
+    color: #0d2461 !important;
+    background: #eff6ff !important;
+}
+
+/* ── Table chung ── */
+.fm-table-wrap {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e8edf5;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.fm-table .ant-table-thead>tr>th {
+    background: #f8fafc !important;
+    color: #64748b !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.09em !important;
+    border-bottom: 1px solid #e8edf5 !important;
+    padding: 14px 16px !important;
+}
+
+.fm-table .ant-table-tbody>tr>td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    vertical-align: middle !important;
+}
+
+.fm-table .ant-table-tbody>tr:hover>td {
+    background: #f8faff !important;
+}
+
+.fm-table .ant-table-tbody>tr:last-child>td {
+    border-bottom: none !important;
+}
+
+.fm-table .ant-table-tbody>tr.ant-table-row-selected>td {
+    background: #eff6ff !important;
+}
+
+.fm-table .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #0d2461 !important;
+    border-color: #0d2461 !important;
+}
+
+.fm-table .ant-pagination {
+    padding: 16px 0 4px !important;
+    margin: 0 !important;
+}
+
+.fm-table .ant-pagination-item-active {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+}
+
+.fm-table .ant-pagination-item-active a {
+    color: #fff !important;
+}
+
+.fm-table .ant-pagination-item:hover {
+    border-color: #0d2461 !important;
+}
+
+.fm-table .ant-pagination-item:hover a {
+    color: #0d2461 !important;
+}
+
+/* ── Cells ── */
+.cell-stt {
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.fm-book-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d2461;
+}
+
+.fm-reason-text {
+    font-size: 13px;
+    color: #475569;
+}
+
+.fm-date-text {
+    font-size: 13px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.fm-amount-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ef4444;
+}
+
+.fm-status-tag.ant-tag {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    border: none !important;
+}
+
+/* ── Footer bar (xác nhận thanh toán) ── */
+.fm-footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-top: 1px solid #f0f4f9;
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+}
+
+.fm-selected-summary {
+    font-size: 13.5px;
+    color: #64748b;
+}
+
+.fm-selected-summary strong {
+    color: #0d2461;
+    font-size: 15px;
+}
+
+.fm-total-amount {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ef4444;
+    margin-left: 14px;
+}
+
+.fm-confirm-btn.ant-btn {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 42px !important;
+    padding: 0 24px !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(13, 36, 97, .22) !important;
+}
+
+.fm-confirm-btn.ant-btn:hover:not(:disabled) {
+    background: #0a1d50 !important;
+    border-color: #0a1d50 !important;
+}
+
+.fm-confirm-btn.ant-btn:disabled {
+    background: #e2e8f0 !important;
+    border-color: #e2e8f0 !important;
+    color: #94a3b8 !important;
+    box-shadow: none !important;
+}
+
+/* ── Modal thanh toán ── */
+.fm-payment-modal .ant-modal-content {
+    border-radius: 14px !important;
+    overflow: hidden;
+}
+
+.fm-payment-modal .ant-modal-header {
+    border-bottom: 1px solid #f0f4f9 !important;
+    padding: 18px 24px 16px !important;
+}
+
+.fm-payment-modal .ant-modal-title {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: #0d2461 !important;
+}
+
+.fm-payment-summary {
+    background: #f8fafc;
+    border: 1px solid #e8edf5;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+}
+
+.fm-payment-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13.5px;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.fm-payment-summary-row:last-child {
+    margin-bottom: 0;
+    padding-top: 10px;
+    border-top: 1px solid #e8edf5;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0d2461;
+}
+
+.fm-payment-summary-row .fm-total-label {
+    color: #0d2461;
+    font-weight: 700;
+}
+
+.fm-payment-summary-row .fm-total-value {
+    color: #ef4444;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.fm-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f4f9;
+    margin-top: 4px;
+}
+
+/* ═══════════════════════════════════
+   TAB 2 — TOOLBAR
+   ═══════════════════════════════════ */
+.fm-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e8edf5;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.fm-search.ant-input-affix-wrapper {
+    flex: 1;
+    border-radius: 8px !important;
+    border-color: #e8edf5 !important;
+    font-size: 14px !important;
+    height: 42px !important;
+}
+
+.fm-search.ant-input-affix-wrapper:focus,
+.fm-search.ant-input-affix-wrapper-focused {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+.fm-status-filter {
+    width: 200px !important;
+}
+
+.fm-status-filter .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #e8edf5 !important;
+    font-size: 14px !important;
+    height: 42px !important;
+    align-items: center !important;
+}
+
+@media (max-width: 900px) {
+    .fm-page {
+        padding: 20px 16px 40px;
+    }
+
+    .fm-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .fm-scan-card.ant-card {
+        width: 100% !important;
+    }
+
+    .fm-scan-card .ant-card-body {
+        padding: 32px 24px 28px !important;
+    }
+
+    .fm-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .fm-status-filter {
+        width: 100% !important;
+    }
+
+    .fm-footer-bar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .fm-confirm-btn.ant-btn {
+        width: 100%;
+    }
+}

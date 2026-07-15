@@ -5,4 +5,5 @@ import lombok.Data;
 public class AuthorResponse {
     Long id;
     private String name;
+    private String description;
 }

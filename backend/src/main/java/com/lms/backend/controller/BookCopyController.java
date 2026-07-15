@@ -8,26 +8,32 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/book-copies")
+@PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
 public class BookCopyController {
     private final BookCopyService bookCopyService;
 
     @GetMapping("")
-    public ResponseEntity<ApiResponse<Page<BookCopyResponse>>> getAllBookCopies(Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(bookCopyService.getAllBookCopy(pageable)));
+    public ResponseEntity<ApiResponse<Page<BookCopyResponse>>> getAllBookCopies(FilterBookCopyRequest filterBookCopyRequest,Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(bookCopyService.searchBookCopy(filterBookCopyRequest,pageable)));
     }
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse<BookCopyDetailResponse>> getBookCopyById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(bookCopyService.getBookCopyById(id)));
     }
     @GetMapping("/search")
-    public ResponseEntity<ApiResponse<Page<BookCopyResponse>>> saerchBoookCopies(FilterBookCopyRequest filterBookCopyRequest, Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(bookCopyService.searchBookCopy(filterBookCopyRequest,pageable)));
+    public ResponseEntity<ApiResponse<BookCopyResponse>> getBookCopyByBarcode(@RequestParam("barcode") String barcode) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(bookCopyService.getBookCopyByBarcode(barcode)));
     }
+//    @GetMapping("/search")
+//    public ResponseEntity<ApiResponse<Page<BookCopyResponse>>> saerchBoookCopies(FilterBookCopyRequest filterBookCopyRequest, Pageable pageable) {
+//        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(bookCopyService.searchBookCopy(filterBookCopyRequest,pageable)));
+//    }
     @PostMapping("")
     public ResponseEntity<ApiResponse<BookCopyResponse>> createBookCopy(@RequestBody BookCopyRequest bookCopyRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(bookCopyService.createBookCopy(bookCopyRequest)));

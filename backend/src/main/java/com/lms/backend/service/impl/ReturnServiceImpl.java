@@ -94,6 +94,7 @@ public class ReturnServiceImpl implements ReturnService {
                     bookCopy.setStatus(BookCopyStatus.AVAILABLE);
             }
             loanDetail.setStatus(LoanDetailStatus.RETURNED);
+            loanDetail.setReturnDate(LocalDate.now());
             loanDetailRepository.save(loanDetail);
             bookCopyRepository.save(bookCopy);
             if (totalFine.compareTo(BigDecimal.ZERO)>0) {
@@ -192,7 +193,6 @@ public class ReturnServiceImpl implements ReturnService {
         returnItemRepsonse.setId(loanDetail.getId());
         returnItemRepsonse.setBarcode(loanDetail.getBookCopy().getBarcode());
         returnItemRepsonse.setBookTitle(loanDetail.getBookCopy().getBook().getTitle());
-        returnItemRepsonse.setCardCode(loanDetail.getLoanSlip().getLibraryCard().getCardCode());
         returnItemRepsonse.setBorrowDate(loanDetail.getLoanSlip().getBorrowDate());
         returnItemRepsonse.setDueDate(loanDetail.getDueDate());
         returnItemRepsonse.setDaysOverdue(daysOverdue);

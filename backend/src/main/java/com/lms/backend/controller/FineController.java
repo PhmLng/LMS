@@ -21,7 +21,7 @@ public class FineController {
     private final FineService fineService;
 
     @GetMapping("")
-    public ResponseEntity<ApiResponse<Page<FineResponse>>> getFinesByStatus(@RequestParam(name = "readerId") Long readerId,@RequestParam(required = false) FineStatus status, Pageable pageable) {
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(fineService.getFineByStatus(readerId,status, pageable)));
+    public ResponseEntity<ApiResponse<Page<FineResponse>>> getFinesByStatus(@RequestParam(required = false) String cardCode,@RequestParam(required = false) FineStatus status, Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(fineService.getFineByStatus(cardCode,status, pageable)));
     }
 }

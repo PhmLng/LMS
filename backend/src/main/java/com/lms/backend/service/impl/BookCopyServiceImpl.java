@@ -38,12 +38,15 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Override
     public BookCopyResponse getBookCopyByBarcode(String barcode) {
+        System.out.println(barcode);
         BookCopy bookCopy = bookCopyRepository.findByBarcodeAndIsDeletedFalse(barcode).orElseThrow(()->new RuntimeException("BookCopy not found"));
+
         return bookCopyMapper.toBookCopyResponse(bookCopy);
     }
 
     @Override
     public Page<BookCopyResponse> searchBookCopy(FilterBookCopyRequest filterBookCopyRequest, Pageable pageable) {
+        System.out.println("Check request data: " + filterBookCopyRequest.getBookId() + " - " + filterBookCopyRequest.getStatus());
         Page<BookCopy> bookCopies = bookCopyRepository.searchBookCopy(filterBookCopyRequest.getStatus(), filterBookCopyRequest.getBookId(), pageable);
         Page<BookCopyResponse> bookCopyResponses = bookCopies.map(bookCopy -> bookCopyMapper.toBookCopyResponse(bookCopy));
         return bookCopyResponses;
@@ -51,7 +54,6 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Override
     public BookCopyResponse createBookCopy(BookCopyRequest bookCopyRequest) {
-        System.out.println("Book id: " + bookCopyRequest.getBookId());
         Book book = bookRepository.findById(bookCopyRequest.getBookId()).orElseThrow(() -> new RuntimeException("Book not found"));
         if (bookCopyRequest.getBarcode()==null || bookCopyRequest.getBarcode().isBlank()){
             bookCopyRequest.setBarcode(generateBarcode(bookCopyRequest.getBookId()));

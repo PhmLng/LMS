@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/library-cards")
+@RequestMapping("/api/v1/library-cards")
 public class LibraryCardController {
     private final LibraryCardService libraryCardService;
 
@@ -24,14 +24,18 @@ public class LibraryCardController {
     public ResponseEntity<ApiResponse<Page<LibraryCardResponse>>> getLibraryCards(@RequestParam(required = false) CardStatus status,Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(libraryCardService.getLibraryCards(status, pageable)));
     }
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<LibraryCardResponse>> getLibraryCardByCardCode(@RequestParam() String cardCode) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(libraryCardService.getLibraryCardByCardCode(cardCode)));
+    }
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse<LibraryCardResponse>> getLibraryCardById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(libraryCardService.getLibraryCardById(id)));
     }
-    @PostMapping("")
-    public ResponseEntity<ApiResponse<LibraryCardResponse>> createLibraryCard(@RequestBody LibraryCardRequest libraryCardRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(libraryCardService.createLibraryCard(libraryCardRequest)));
-    }
+//    @PostMapping("")
+//    public ResponseEntity<ApiResponse<LibraryCardResponse>> createLibraryCard(@RequestBody LibraryCardRequest libraryCardRequest) {
+//        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(libraryCardService.createLibraryCard(libraryCardRequest)));
+//    }
     @PutMapping("{id}")
     public ResponseEntity<ApiResponse<LibraryCardResponse>> updateLibraryCard(@PathVariable Long id,@RequestBody LibraryCardUpdateRequest libraryCardUpdateRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(libraryCardService.updateLibraryCard(id,libraryCardUpdateRequest)));

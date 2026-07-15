@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface LibraryCardRepository extends JpaRepository<LibraryCard, Long> {
@@ -22,4 +23,7 @@ public interface LibraryCardRepository extends JpaRepository<LibraryCard, Long> 
     @Override
     @EntityGraph(attributePaths = {"reader"})
     Optional<LibraryCard> findById(Long id);
+
+    Optional<LibraryCard> findByCardCode(String cardCode);
+    List<LibraryCard> findAllByReaderIdIn(List<Long> readerIds);
 }

@@ -16,6 +16,7 @@ import com.lms.backend.repository.LibraryCardRepository;
 import com.lms.backend.repository.LoanDetailRepository;
 import com.lms.backend.repository.LoanSlipRepository;
 import com.lms.backend.service.LoanSlipService;
+import com.lms.backend.service.SystemSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,9 +36,10 @@ public class LoanSlipServiceImpl implements LoanSlipService {
     private final LoanDetailRepository loanDetailRepository;
     private final LibraryCardRepository libraryCardRepository;
     private final BookCopyRepository bookCopyRepository;
+    private  final SystemSettingService systemSettingService;
     @Override
-    public Page<LoanSlipResponse> getLoanSlips(Long cardId ,LoanStatus status, Pageable pageable) {
-        Page<LoanSlip> loanSlips = loanSlipRepository.searchLoanSlips(cardId, status, pageable);
+    public Page<LoanSlipResponse> getLoanSlips(String cardCode ,LoanStatus status, Pageable pageable) {
+        Page<LoanSlip> loanSlips = loanSlipRepository.searchLoanSlips(cardCode, status, pageable);
         Page<LoanSlipResponse> loanSlipResponses = loanSlips.map(loanSlip -> loanSlipMapper.toLoanSlipResponse(loanSlip));
         return loanSlipResponses;
     }
@@ -68,6 +70,9 @@ public class LoanSlipServiceImpl implements LoanSlipService {
         List<LoanDetail> loanDetails = new ArrayList<>();
         for(String barcode : borrowRequest.getBarcodes()){
             BookCopy bookCopy = bookCopyRepository.findByBarcodeAndIsDeletedFalse(barcode).orElseThrow(()->new RuntimeException("BookCopy not found"));
+            if (bookCopy.getStatus()== BookCopyStatus.BORROWED){
+                throw new RuntimeException("BookCopy is Borrowed");
+            }
             bookCopy.setStatus(BookCopyStatus.BORROWED);
             bookCopyRepository.save(bookCopy);
             LoanDetail loanDetail = new LoanDetail();

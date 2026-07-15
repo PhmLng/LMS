@@ -10,5 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface FineMapper {
     @Mapping(source = "loanDetail.bookCopy.book.title", target = "bookTitle")
+    @Mapping(target = "cardCode", ignore = true)
+    @Mapping(target = "readerName", ignore = true)
     FineResponse toFineResponse (Fine fine);
 }

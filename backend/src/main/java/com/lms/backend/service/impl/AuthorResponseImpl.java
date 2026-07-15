@@ -2,10 +2,7 @@ package com.lms.backend.service.impl;
 
 import com.lms.backend.dto.authorDto.AuthorRequest;
 import com.lms.backend.dto.authorDto.AuthorResponse;
-import com.lms.backend.dto.bookDto.BookResponse;
-import com.lms.backend.dto.categoryDto.CategoryResponse;
 import com.lms.backend.entity.Author;
-import com.lms.backend.entity.Book;
 import com.lms.backend.mapper.AuthorMapper;
 import com.lms.backend.repository.AuthorRepository;
 import com.lms.backend.service.AuthorService;
@@ -16,14 +13,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorResopnseImpl implements AuthorService {
+public class AuthorResponseImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     private final AuthorMapper authorMapper;
 
     @Override
-    public Page<AuthorResponse> getAllAuthors(Pageable pageable) {
-        Page<Author> authors = authorRepository.findAll(pageable);
+    public Page<AuthorResponse> getAllAuthors(Pageable pageable,String name) {
+        Page<Author> authors = authorRepository.findAllAuthors(pageable,name);
         Page<AuthorResponse> authorResponses = authors.map((author -> authorMapper.toAuthorResponse(author)));
         return authorResponses;
     }

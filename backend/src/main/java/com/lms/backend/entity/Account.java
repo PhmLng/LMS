@@ -1,11 +1,11 @@
 package com.lms.backend.entity;
 
 import com.lms.backend.enums.AccountStatus;
-import com.lms.backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
@@ -18,11 +18,19 @@ public class Account {
     @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(name = "fullname")
+    private String fullname;
+
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany
+    @JoinTable(
+            name = "accounts_roles",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_name") //
+    )
+    private Set<Role> roles;
 
     @Enumerated(EnumType.STRING)
     private AccountStatus status;

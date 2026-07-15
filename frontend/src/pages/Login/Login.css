@@ -1,0 +1,277 @@
+/* ============================================================
+   src/pages/Login/Login.css
+   Style cho trang Login - khớp chính xác với thiết kế trong ảnh.
+   Màu chủ đạo: Navy Blue (#1a2a6c / #0d1f5c) + nền xám nhạt.
+   ============================================================ */
+
+/* --- Biến màu sắc --- */
+:root {
+    --navy: #0d2461;
+    --navy-hover: #0a1d50;
+    --bg-page: #f0f2f5;
+    --bg-card: #ffffff;
+    --text-label: #374151;
+    --text-muted: #9ca3af;
+    --text-footer: #6b7280;
+    --border: #e5e7eb;
+    --font-main: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ===== LAYOUT TOÀN TRANG ===== */
+.login-layout {
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-main);
+}
+
+/* ===== HEADER ===== */
+.login-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 56px;
+    background-color: var(--bg-page);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+}
+
+.header-help {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid #c4c9d4;
+    background: transparent;
+    color: #6b7280;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.header-help:hover {
+    border-color: var(--navy);
+    color: var(--navy);
+}
+
+/* ===== MAIN (vùng trung tâm chứa card) ===== */
+.login-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+}
+
+/* ===== CARD ===== */
+.login-card {
+    background: var(--bg-card);
+    border-radius: 4px;
+    padding: 52px 56px 44px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Tiêu đề Card */
+.card-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.card-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: var(--text-footer);
+    margin: 0;
+}
+
+/* ===== FORM ITEMS ===== */
+
+/* Override Ant Design label style */
+.form-item-custom .ant-form-item-label>label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    color: var(--text-label) !important;
+    height: auto !important;
+}
+
+/* Label hàng PASSCODE + RESET */
+.passcode-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.reset-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.reset-link:hover {
+    opacity: 0.7;
+}
+
+/* Override Ant Design Input */
+.input-custom.ant-input,
+.input-custom.ant-input-affix-wrapper {
+    border-radius: 4px !important;
+    border-color: var(--border) !important;
+    font-size: 14px !important;
+    color: #374151 !important;
+    background: #fff !important;
+}
+
+.input-custom.ant-input:focus,
+.input-custom.ant-input-affix-wrapper:focus,
+.input-custom.ant-input-affix-wrapper-focused {
+    border-color: var(--navy) !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, 0.1) !important;
+}
+
+/* Placeholder */
+.input-custom.ant-input::placeholder,
+.input-custom .ant-input::placeholder {
+    color: #d1d5db;
+    letter-spacing: 0.05em;
+}
+
+/* Checkbox */
+.form-item-checkbox {
+    margin-top: 4px !important;
+    margin-bottom: 28px !important;
+}
+
+.checkbox-custom .ant-checkbox-inner {
+    border-radius: 3px;
+    border-color: #d1d5db;
+}
+
+.checkbox-custom .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: var(--navy);
+    border-color: var(--navy);
+}
+
+.checkbox-custom span:last-child {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* ===== NÚT SUBMIT ===== */
+.form-item-button {
+    margin-bottom: 0 !important;
+}
+
+.btn-submit.ant-btn {
+    background-color: var(--navy) !important;
+    border-color: var(--navy) !important;
+    border-radius: 4px !important;
+    height: 52px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    color: #fff !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.btn-submit.ant-btn:hover {
+    background-color: var(--navy-hover) !important;
+    border-color: var(--navy-hover) !important;
+}
+
+/* ===== FOOTER CỦA CARD ===== */
+.card-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 36px;
+}
+
+.card-footer-line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--border);
+}
+
+.card-footer-text {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: #9ca3af;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* ===== FOOTER TRANG ===== */
+.login-page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    font-size: 11px;
+    color: #9ca3af;
+    letter-spacing: 0.05em;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--navy);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 520px) {
+    .login-card {
+        padding: 40px 28px 36px;
+    }
+
+    .login-header {
+        padding: 0 16px;
+    }
+
+    .login-page-footer {
+        padding: 16px;
+        flex-direction: column;
+        gap: 8px;
+    }
+}

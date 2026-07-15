@@ -41,7 +41,7 @@ public interface LoanSlipRepository extends JpaRepository<LoanSlip, Long> {
             "details.bookCopy.book"
     })
     @Query("SELECT ls FROM LoanSlip ls WHERE " +
-            "(:cardId IS NULL OR ls.libraryCard.id = :cardId) AND " +
+            "(:cardCode IS NULL OR ls.libraryCard.cardCode = :cardCode) AND " +
             "(:status IS NULL OR ls.status = :status)")
-    Page<LoanSlip> searchLoanSlips(Long cardId, LoanStatus status, Pageable pageable);
+    Page<LoanSlip> searchLoanSlips(String cardCode, LoanStatus status, Pageable pageable);
 }

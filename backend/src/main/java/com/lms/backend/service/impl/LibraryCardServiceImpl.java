@@ -44,8 +44,14 @@ public class LibraryCardServiceImpl implements LibraryCardService {
     }
 
     @Override
+    public LibraryCardResponse getLibraryCardByCardCode(String cardCode) {
+        LibraryCard libraryCard = libraryCardRepository.findByCardCode(cardCode).orElseThrow(() -> new RuntimeException("Card is not found"));
+        return libraryCardMapper.toLibraryCardResponse(libraryCard);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
-    public LibraryCardResponse createLibraryCard(LibraryCardRequest libraryCardRequest) {
+    public LibraryCard createLibraryCard(LibraryCardRequest libraryCardRequest) {
         LibraryCard libraryCard = libraryCardMapper.toLibraryCard(libraryCardRequest);
         if (libraryCardRequest.getCardCode() == null || libraryCardRequest.getCardCode().isBlank()) {
             libraryCard.setCardCode(generateCardCode());
@@ -55,10 +61,10 @@ public class LibraryCardServiceImpl implements LibraryCardService {
                 throw new RuntimeException("card code already exists");
             }
         }
-        Reader reader = readerRepository.findById(libraryCardRequest.getReaderId()).orElseThrow(()->new RuntimeException("reader not found"));
-        libraryCard.setReader(reader);
-        libraryCardRepository.save(libraryCard);
-        return libraryCardMapper.toLibraryCardResponse(libraryCard);
+//        Reader reader = readerRepository.findById(libraryCardRequest.getReaderId()).orElseThrow(()->new RuntimeException("reader not found"));
+//        libraryCard.setReader(reader);
+//        libraryCardRepository.save(libraryCard);
+        return libraryCard;
     }
 
     @Override

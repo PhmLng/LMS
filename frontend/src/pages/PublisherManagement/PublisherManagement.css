@@ -1,0 +1,261 @@
+/* ============================================================
+   src/pages/PublisherManagement/PublisherManagement.css
+   Style đồng nhất với AuthorManagement — tone navy #0d2461
+   ============================================================ */
+
+.pm-page {
+    padding: 32px 36px 56px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: "Segoe UI", "Inter", Arial, sans-serif;
+}
+
+/* ── Header ── */
+.pm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.pm-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.pm-subtitle {
+    font-size: 13.5px;
+    color: #64748b;
+    margin: 0;
+}
+
+.pm-subtitle strong {
+    color: #0d2461;
+}
+
+.pm-btn-add.ant-btn {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 42px !important;
+    padding: 0 22px !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(13, 36, 97, .22) !important;
+    transition: background .18s !important;
+}
+
+.pm-btn-add.ant-btn:hover {
+    background: #0a1d50 !important;
+    border-color: #0a1d50 !important;
+}
+
+/* ── Toolbar ── */
+.pm-toolbar {
+    background: #ffffff;
+    border: 1px solid #e8edf5;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.pm-search {
+    width: 100%;
+}
+
+.pm-search.ant-input-affix-wrapper {
+    border-radius: 8px !important;
+    border-color: #e8edf5 !important;
+    font-size: 14px !important;
+    height: 42px !important;
+}
+
+.pm-search.ant-input-affix-wrapper:focus,
+.pm-search.ant-input-affix-wrapper-focused {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+.search-icon {
+    color: #94a3b8;
+    font-size: 16px;
+}
+
+/* ── Table ── */
+.pm-table-wrap {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e8edf5;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.pm-table .ant-table-thead>tr>th {
+    background: #f8fafc !important;
+    color: #64748b !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.09em !important;
+    border-bottom: 1px solid #e8edf5 !important;
+    padding: 14px 16px !important;
+}
+
+.pm-table .ant-table-tbody>tr>td {
+    padding: 16px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    vertical-align: middle !important;
+}
+
+.pm-table .ant-table-tbody>tr:hover>td {
+    background: #f8faff !important;
+}
+
+.pm-table .ant-table-tbody>tr:last-child>td {
+    border-bottom: none !important;
+}
+
+.cell-stt {
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.pub-name-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d2461;
+}
+
+.pub-desc-text {
+    font-size: 13.5px;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.cell-empty {
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* ── Action buttons ── */
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background .15s, color .15s, border-color .15s;
+}
+
+.action-btn.edit {
+    color: #64748b;
+}
+
+.action-btn.edit:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0d2461;
+}
+
+.action-btn.delete {
+    color: #ef4444;
+}
+
+.action-btn.delete:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+/* ── Pagination ── */
+.pm-table .ant-pagination {
+    padding: 16px 0 4px !important;
+    margin: 0 !important;
+}
+
+.pm-table .ant-pagination-item-active {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+}
+
+.pm-table .ant-pagination-item-active a {
+    color: #fff !important;
+}
+
+.pm-table .ant-pagination-item:hover {
+    border-color: #0d2461 !important;
+}
+
+.pm-table .ant-pagination-item:hover a {
+    color: #0d2461 !important;
+}
+
+/* ── Modal ── */
+.pub-modal .ant-modal-header {
+    border-bottom: 1px solid #f0f4f9 !important;
+    padding: 18px 24px 16px !important;
+}
+
+.pub-modal .ant-modal-title {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: #0d2461 !important;
+}
+
+.pub-modal .ant-modal-content {
+    border-radius: 14px !important;
+    overflow: hidden;
+}
+
+.pub-form .ant-form-item-label>label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.pub-form .ant-input,
+.pub-form .ant-input-affix-wrapper,
+.pub-form textarea.ant-input {
+    border-radius: 8px !important;
+    border-color: #e2e8f0 !important;
+    font-size: 14px !important;
+}
+
+.pub-form .ant-input:focus,
+.pub-form .ant-input-affix-wrapper-focused,
+.pub-form textarea.ant-input:focus {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f4f9;
+    margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+    .pm-page {
+        padding: 20px 16px 40px;
+    }
+
+    .pm-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+}

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class LibraryCardResponse {
+    Long id;
     private String cardCode;
     private LocalDateTime issueDate;
     private LocalDateTime expiryDate;

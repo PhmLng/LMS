@@ -1,0 +1,327 @@
+/* ============================================================
+   src/pages/StaffManagement/StaffManagement.css
+   ============================================================ */
+
+.sm-page {
+    padding: 32px 36px 56px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: "Segoe UI", "Inter", Arial, sans-serif;
+}
+
+/* ── Header ── */
+.sm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.sm-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d2461;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.sm-subtitle {
+    font-size: 13.5px;
+    color: #64748b;
+    margin: 0;
+}
+
+.sm-subtitle strong {
+    color: #0d2461;
+}
+
+.sm-btn-add.ant-btn {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 42px !important;
+    padding: 0 22px !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(13, 36, 97, .22) !important;
+    transition: background .18s !important;
+}
+
+.sm-btn-add.ant-btn:hover {
+    background: #0a1d50 !important;
+    border-color: #0a1d50 !important;
+}
+
+/* ── Toolbar ── */
+.sm-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e8edf5;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.sm-search.ant-input-affix-wrapper,
+.sm-search.ant-input-search .ant-input-affix-wrapper {
+    flex: 1;
+    border-radius: 8px !important;
+    border-color: #e8edf5 !important;
+    font-size: 14px !important;
+    height: 42px !important;
+}
+
+.sm-search .ant-input-search-button {
+    border-radius: 0 8px 8px 0 !important;
+    height: 42px !important;
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+}
+
+.sm-search.ant-input-affix-wrapper:focus,
+.sm-search.ant-input-affix-wrapper-focused {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+.sm-role-filter {
+    width: 200px !important;
+}
+
+.sm-role-filter .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #e8edf5 !important;
+    font-size: 14px !important;
+    height: 42px !important;
+    align-items: center !important;
+}
+
+.sm-role-filter.ant-select-focused .ant-select-selector {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+/* ── Table ── */
+.sm-table-wrap {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e8edf5;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.sm-table .ant-table-thead>tr>th {
+    background: #f8fafc !important;
+    color: #64748b !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.09em !important;
+    border-bottom: 1px solid #e8edf5 !important;
+    padding: 14px 16px !important;
+}
+
+.sm-table .ant-table-tbody>tr>td {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    vertical-align: middle !important;
+}
+
+.sm-table .ant-table-tbody>tr:hover>td {
+    background: #f8faff !important;
+}
+
+.sm-table .ant-table-tbody>tr:last-child>td {
+    border-bottom: none !important;
+}
+
+/* ── Pagination ── */
+.sm-table .ant-pagination {
+    padding: 16px 0 4px !important;
+    margin: 0 !important;
+}
+
+.sm-table .ant-pagination-item-active {
+    background: #0d2461 !important;
+    border-color: #0d2461 !important;
+}
+
+.sm-table .ant-pagination-item-active a {
+    color: #fff !important;
+}
+
+.sm-table .ant-pagination-item:hover {
+    border-color: #0d2461 !important;
+}
+
+.sm-table .ant-pagination-item:hover a {
+    color: #0d2461 !important;
+}
+
+/* ── Cells ── */
+.cell-stt {
+    font-size: 13px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.sm-staff-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sm-staff-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d2461;
+}
+
+.sm-staff-id {
+    font-size: 11.5px;
+    color: #94a3b8;
+    font-family: "Consolas", monospace;
+}
+
+.sm-email-text {
+    font-size: 13.5px;
+    color: #374151;
+}
+
+.sm-phone-text {
+    font-size: 13.5px;
+    color: #374151;
+    font-family: "Consolas", monospace;
+    letter-spacing: 0.02em;
+}
+
+.sm-role-tag.ant-tag {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    border: none !important;
+}
+
+/* Status cell */
+.sm-status-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sm-status-label {
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.sm-status-label.active {
+    color: #10b981;
+}
+
+.sm-status-label.inactive {
+    color: #ef4444;
+}
+
+/* Switch override */
+.sm-status-switch.ant-switch-checked {
+    background: #10b981 !important;
+}
+
+/* Action buttons */
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background .15s, color .15s, border-color .15s;
+}
+
+.action-btn.edit {
+    color: #64748b;
+}
+
+.action-btn.edit:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0d2461;
+}
+
+/* ── Modal Form ── */
+.staff-modal .ant-modal-header {
+    border-bottom: 1px solid #f0f4f9 !important;
+    padding: 18px 24px 16px !important;
+}
+
+.staff-modal .ant-modal-title {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    color: #0d2461 !important;
+}
+
+.staff-modal .ant-modal-content {
+    border-radius: 14px !important;
+    overflow: hidden;
+}
+
+.staff-form .ant-form-item-label>label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+.staff-form .ant-input,
+.staff-form .ant-input-password,
+.staff-form .ant-select-selector {
+    border-radius: 8px !important;
+    border-color: #e2e8f0 !important;
+    font-size: 14px !important;
+}
+
+.staff-form .ant-input:focus,
+.staff-form .ant-input-affix-wrapper-focused,
+.staff-form .ant-select-focused .ant-select-selector {
+    border-color: #0d2461 !important;
+    box-shadow: 0 0 0 2px rgba(13, 36, 97, .1) !important;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f4f9;
+    margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+    .sm-page {
+        padding: 20px 16px 40px;
+    }
+
+    .sm-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .sm-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sm-role-filter {
+        width: 100% !important;
+    }
+}

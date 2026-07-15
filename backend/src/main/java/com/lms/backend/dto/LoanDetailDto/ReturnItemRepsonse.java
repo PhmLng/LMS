@@ -11,11 +11,9 @@ import java.time.LocalDateTime;
 @Data
 public class ReturnItemRepsonse {
 
-    private Long Id;
+    private Long id;
     private String barcode;
     private String bookTitle;
-    private String readerName;
-    private String cardCode;
     private LocalDateTime borrowDate;
     private LocalDate dueDate;
     private Long daysOverdue;

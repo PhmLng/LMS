@@ -10,18 +10,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/publishers")
+@PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
 public class PublisherController {
 
     private final PublisherService publisherService;
 
     @GetMapping("")
-    public ResponseEntity<ApiResponse<Page<PublisherResponse>>> getAllPublishers(@PageableDefault(page = 0, size = 10) Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(publisherService.getAllPublishers(pageable)));
+    public ResponseEntity<ApiResponse<Page<PublisherResponse>>> getAllPublishers(@PageableDefault(page = 0, size = 10) Pageable pageable, @RequestParam(required = false)String name) {
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(publisherService.getAllPublishers(pageable,name)));
     }
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse<PublisherResponse>> getPublisherById(@PathVariable Long id){

@@ -16,6 +16,8 @@ public class FineResponse {
     private BigDecimal amount;
     private String reason;
     private Long readerId;
+    private String readerName;
+    private String cardCode;
     private FineStatus status;
     private String bookTitle;
     private LocalDateTime createdAt;

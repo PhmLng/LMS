@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface FineService {
-    public Page<FineResponse> getFineByStatus (Long ReaderId,FineStatus status, Pageable pageable);
+    public Page<FineResponse> getFineByStatus (String cardCode,FineStatus status, Pageable pageable);
 }

@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class FilterBookCopyRequest {
-    Long bookId;
-    BookCopyStatus status;
+    private Long bookId;
+    private BookCopyStatus status;
 }

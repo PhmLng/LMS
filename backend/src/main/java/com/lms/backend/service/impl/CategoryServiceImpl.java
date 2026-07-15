@@ -22,8 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public Page<CategoryResponse> getAllCategories(Pageable pageable) {
-        Page<Category> categoryPage = categoryRepository.findAll(pageable);
+    public Page<CategoryResponse> getAllCategories(Pageable pageable,String name) {
+        Page<Category> categoryPage = categoryRepository.getAllCategory(pageable,name);
         Page<CategoryResponse> categoryResponses = categoryPage.map(category -> categoryMapper.toCategoryResponse(category));
         return categoryResponses;
     }

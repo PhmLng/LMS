@@ -18,8 +18,8 @@ public class ReturnController {
     private final ReturnService returnService;
 
     @GetMapping("/return-items")
-    public ResponseEntity<ApiResponse<List<ReturnItemRepsonse>>> getReturnItems(@RequestParam String code) {
-       return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(returnService.getReturnItems(code)));
+    public ResponseEntity<ApiResponse<List<ReturnItemRepsonse>>> getReturnItems(@RequestParam String cardCode) {
+       return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(returnService.getReturnItems(cardCode)));
     }
 
     @PostMapping("")

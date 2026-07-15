@@ -13,9 +13,13 @@ import java.util.List;
 
 @Data
 public class BookResponse {
+    private long id;
     private String title;
+    private String isbn;
     private String imageUrl;
     private BookStatus status;
+    private int quantity;
+    private int remainingQuantity;
     private String author;
     private String publisher;
 }
