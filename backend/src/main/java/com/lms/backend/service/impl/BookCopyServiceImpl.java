@@ -4,6 +4,8 @@ import com.lms.backend.dto.BookCopyDto.*;
 import com.lms.backend.entity.Book;
 import com.lms.backend.entity.BookCopy;
 import com.lms.backend.enums.BookCopyStatus;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.BookCopyMapper;
 import com.lms.backend.repository.BookCopyRepository;
 import com.lms.backend.repository.BookRepository;
@@ -32,14 +34,14 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Override
     public BookCopyDetailResponse getBookCopyById(long id) {
-        BookCopy bookCopy = bookCopyRepository.findById(id).orElseThrow(() -> new RuntimeException("BookCopy not found"));
+        BookCopy bookCopy = bookCopyRepository.findById(id).orElseThrow(() -> new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
         return bookCopyMapper.toBookCopyDetailResponse(bookCopy);
     }
 
     @Override
     public BookCopyResponse getBookCopyByBarcode(String barcode) {
         System.out.println(barcode);
-        BookCopy bookCopy = bookCopyRepository.findByBarcodeAndIsDeletedFalse(barcode).orElseThrow(()->new RuntimeException("BookCopy not found"));
+        BookCopy bookCopy = bookCopyRepository.findByBarcodeAndIsDeletedFalse(barcode).orElseThrow(()->new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
 
         return bookCopyMapper.toBookCopyResponse(bookCopy);
     }
@@ -54,13 +56,13 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Override
     public BookCopyResponse createBookCopy(BookCopyRequest bookCopyRequest) {
-        Book book = bookRepository.findById(bookCopyRequest.getBookId()).orElseThrow(() -> new RuntimeException("Book not found"));
+        Book book = bookRepository.findById(bookCopyRequest.getBookId()).orElseThrow(() -> new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
         if (bookCopyRequest.getBarcode()==null || bookCopyRequest.getBarcode().isBlank()){
             bookCopyRequest.setBarcode(generateBarcode(bookCopyRequest.getBookId()));
         }
         else {
             if(bookCopyRepository.existsByBarcode(bookCopyRequest.getBarcode())){
-                throw new RuntimeException("Barcode already exists");
+                throw new AppExcpetion(ErrorCode.BOOK_NOT_FOUND);
             }
         }
         BookCopy bookCopy = bookCopyMapper.toBookCopy(bookCopyRequest);
@@ -71,9 +73,9 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Override
     public BookCopyResponse updateBookCopy(Long id,BookCopyUpdateRequest bookCopyUpdateRequest) {
-        BookCopy bookCopy = bookCopyRepository.findById(id).orElseThrow(() -> new RuntimeException("BookCopy not found"));
+        BookCopy bookCopy = bookCopyRepository.findById(id).orElseThrow(() -> new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
         if(!bookCopyUpdateRequest.getBookId().equals(bookCopy.getBook().getId())) {
-            Book book = bookRepository.findById(bookCopy.getBook().getId()).orElseThrow(() -> new RuntimeException("Book not found"));
+            Book book = bookRepository.findById(bookCopy.getBook().getId()).orElseThrow(() -> new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
             bookCopy.setBook(book);
         }
         bookCopyMapper.updateBookCopy(bookCopy, bookCopyUpdateRequest);
@@ -82,7 +84,7 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Override
     public void deleteBookCopy(long id) {
-        BookCopy bookCopy = bookCopyRepository.findById(id).orElseThrow(() -> new RuntimeException("BookCopy not found"));
+        BookCopy bookCopy = bookCopyRepository.findById(id).orElseThrow(() -> new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
         bookCopy.setDeleted(true);
         bookCopyRepository.save(bookCopy);
     }

@@ -4,6 +4,8 @@ import com.lms.backend.dto.systemSettingDto.SystemResponse;
 import com.lms.backend.dto.systemSettingDto.SystemUpdateRequest;
 import com.lms.backend.entity.SystemSetting;
 import com.lms.backend.enums.SettingKey;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.SystemSettingMapper;
 import com.lms.backend.repository.SystemSettingRepository;
 import com.lms.backend.service.SystemSettingService;
@@ -29,14 +31,14 @@ public class SystemSettingServiceImpl implements SystemSettingService {
 
     @Override
     public BigDecimal getSettingValue(SettingKey key) {
-        SystemSetting systemSetting = systemSettingRepository.findBySettingKey(key).orElseThrow(()->new RuntimeException("System setting not found"));
+        SystemSetting systemSetting = systemSettingRepository.findBySettingKey(key).orElseThrow(()->new AppExcpetion(ErrorCode.SYSTEM_SETTINGS_NOT_FOUND));
         BigDecimal settingValue = new BigDecimal(systemSetting.getSettingValue());
         return settingValue;
     }
 
     @Override
     public String getSettingValueDefault(SettingKey key) {
-        SystemSetting systemSetting = systemSettingRepository.findBySettingKey(key).orElseThrow(()->new RuntimeException("System setting not found"));
+        SystemSetting systemSetting = systemSettingRepository.findBySettingKey(key).orElseThrow(()->new AppExcpetion(ErrorCode.SYSTEM_SETTINGS_NOT_FOUND));
         return systemSetting.getSettingValue();
     }
 
@@ -57,7 +59,7 @@ public class SystemSettingServiceImpl implements SystemSettingService {
                 setting.setUpdatedAt(LocalDateTime.now());
                 settingsToSave.add(setting);
             }else {
-                throw new RuntimeException("System setting not found");
+                throw new AppExcpetion(ErrorCode.SYSTEM_SETTINGS_NOT_FOUND);
             }
             systemSettingRepository.saveAll(settingsToSave);
         }

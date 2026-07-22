@@ -10,6 +10,8 @@ import com.lms.backend.enums.BookCopyStatus;
 import com.lms.backend.enums.CardStatus;
 import com.lms.backend.enums.LoanDetailStatus;
 import com.lms.backend.enums.LoanStatus;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.LoanSlipMapper;
 import com.lms.backend.repository.BookCopyRepository;
 import com.lms.backend.repository.LibraryCardRepository;
@@ -46,22 +48,22 @@ public class LoanSlipServiceImpl implements LoanSlipService {
 
     @Override
     public LoanSlipResponse getLoanSlipById(Long id) {
-        LoanSlip loanSlip = loanSlipRepository.findById(id).orElseThrow(()->new RuntimeException("LoanSlip not found"));
+        LoanSlip loanSlip = loanSlipRepository.findById(id).orElseThrow(()->new AppExcpetion(ErrorCode.CARD_NOT_FOUND));
         return loanSlipMapper.toLoanSlipResponse(loanSlip);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public LoanSlipResponse createLoanSlip(BorrowRequest borrowRequest) {
-        LibraryCard libraryCard = libraryCardRepository.findById(borrowRequest.getCardId()).orElseThrow(()->new RuntimeException("Card not found"));
+        LibraryCard libraryCard = libraryCardRepository.findById(borrowRequest.getCardId()).orElseThrow(()->new AppExcpetion(ErrorCode.CARD_NOT_FOUND));
         if (libraryCard.getStatus()!= CardStatus.ACTIVE){
-            throw new RuntimeException("Card is not active");
+            throw new AppExcpetion(ErrorCode.CARD_LOCKED);
         }
         if(loanDetailRepository.countCurrentlyBorrowed(libraryCard.getCardCode())+borrowRequest.getBarcodes().size()>5){
-            throw new RuntimeException("exceeding the borrowing limit");
+            throw new AppExcpetion(ErrorCode.BORROW_LIMIT_EXCEEDED);
         };
         if (loanSlipRepository.existsByStatus(libraryCard.getCardCode(),LoanStatus.OVERDUE)){
-            throw new RuntimeException("Loan slip has overdue detail");
+            throw new AppExcpetion(ErrorCode.OVERDUE_LOAN_EXISTS);
         }
         LoanSlip loanSlip = new LoanSlip();
         loanSlip.setLibraryCard(libraryCard);
@@ -69,9 +71,9 @@ public class LoanSlipServiceImpl implements LoanSlipService {
         loanSlip.setBorrowDate(LocalDateTime.now());
         List<LoanDetail> loanDetails = new ArrayList<>();
         for(String barcode : borrowRequest.getBarcodes()){
-            BookCopy bookCopy = bookCopyRepository.findByBarcodeAndIsDeletedFalse(barcode).orElseThrow(()->new RuntimeException("BookCopy not found"));
+            BookCopy bookCopy = bookCopyRepository.findByBarcodeAndIsDeletedFalse(barcode).orElseThrow(()->new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
             if (bookCopy.getStatus()== BookCopyStatus.BORROWED){
-                throw new RuntimeException("BookCopy is Borrowed");
+                throw new AppExcpetion(ErrorCode.BOOK_COPY_UNAVAILABLE);
             }
             bookCopy.setStatus(BookCopyStatus.BORROWED);
             bookCopyRepository.save(bookCopy);
@@ -95,7 +97,7 @@ public class LoanSlipServiceImpl implements LoanSlipService {
     @Override
     public void syncStatus(long id) {
         LoanSlip loanSlip = loanSlipRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("LoanSlip not found"));
+                .orElseThrow(() -> new AppExcpetion(ErrorCode.LOAN_SLIP_NOT_FOUND));
 
         int totalItems = loanSlip.getDetails().size();
         int completedItems = loanDetailRepository.countByLoanSlipAndStatus(loanSlip, LoanDetailStatus.RETURNED);

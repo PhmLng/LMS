@@ -8,6 +8,8 @@ import com.lms.backend.enums.BookCopyStatus;
 import com.lms.backend.enums.FineStatus;
 import com.lms.backend.enums.LoanDetailStatus;
 import com.lms.backend.enums.SettingKey;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.LoanDetailMapper;
 import com.lms.backend.repository.BookCopyRepository;
 import com.lms.backend.repository.FineRepository;
@@ -167,7 +169,7 @@ public class ReturnServiceImpl implements ReturnService {
 //    }
     @Override
     public ReturnItemRepsonse handleBarcodeSearch(String barcode) {
-        LoanDetail loanDetail = loanDetailRepository.findActiveByBarcode(barcode).orElseThrow(()-> new RuntimeException("can not find loan detail"));
+        LoanDetail loanDetail = loanDetailRepository.findActiveByBarcode(barcode).orElseThrow(()-> new AppExcpetion(ErrorCode.LOAN_DETAIL_NOT_FOUND));
         ReturnItemRepsonse returnItemRepsonse = mapToReturnItem(loanDetail);
         returnItemRepsonse.setEstimatedFine(calculateEstimatedFine(returnItemRepsonse.getDaysOverdue(),SettingKey.FINE_PER_DAY));
         return returnItemRepsonse;

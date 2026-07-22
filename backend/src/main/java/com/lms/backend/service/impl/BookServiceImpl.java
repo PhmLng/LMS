@@ -8,6 +8,8 @@ import com.lms.backend.entity.Author;
 import com.lms.backend.entity.Book;
 import com.lms.backend.entity.Category;
 import com.lms.backend.entity.Publisher;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.BookMapper;
 import com.lms.backend.repository.*;
 import com.lms.backend.service.BookService;
@@ -48,7 +50,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDetailResponse getBookById(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(()->new RuntimeException("Book not found"));
+        Book book = bookRepository.findById(id).orElseThrow(()->new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
         return bookMapper.toBookDetailResponse(book);
     }
 
@@ -59,11 +61,11 @@ public class BookServiceImpl implements BookService {
         for (Long categoryId : bookRequest.getCategoryIds()) {
             System.out.println(categoryId+" ");
         }
-        Author author = authorRepository.findById(bookRequest.getAuthorId()).orElseThrow(()->new RuntimeException("Author not found"));
-        Publisher publisher = publisherRepository.findById(bookRequest.getPublisherId()).orElseThrow(() -> new RuntimeException("Publisher not found"));
+        Author author = authorRepository.findById(bookRequest.getAuthorId()).orElseThrow(()->new AppExcpetion(ErrorCode.ACCOUNT_NOT_FOUND));
+        Publisher publisher = publisherRepository.findById(bookRequest.getPublisherId()).orElseThrow(() -> new AppExcpetion(ErrorCode.PUBLISHER_NOT_FOUND));
         List<Category> categories = categoryRepository.findAllById(bookRequest.getCategoryIds());
         if(categories.size() != bookRequest.getCategoryIds().size()){
-            throw new RuntimeException("one or more categories not found");
+            throw new AppExcpetion(ErrorCode.CATEGORY_NOT_FOUND);
         }
         book.setAuthor(author);
         book.setPublisher(publisher);
@@ -75,19 +77,19 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BookResponse updateBook(Long id,BookRequest bookRequest) {
-        Book book = bookRepository.findById(id).orElseThrow(()->new RuntimeException("Book not found"));
+        Book book = bookRepository.findById(id).orElseThrow(()->new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
         bookMapper.updateBook(book, bookRequest);
         if(book.getAuthor().getId() != bookRequest.getAuthorId()){
-            Author author = authorRepository.findById(bookRequest.getAuthorId()).orElseThrow(()->new RuntimeException("Author not found"));
+            Author author = authorRepository.findById(bookRequest.getAuthorId()).orElseThrow(()->new AppExcpetion(ErrorCode.AUTHOR_NOT_FOUND));
             book.setAuthor(author);
         }
         if(book.getPublisher().getId() != bookRequest.getPublisherId()){
-            Publisher publisher = publisherRepository.findById(bookRequest.getPublisherId()).orElseThrow(() -> new RuntimeException("Publisher not found"));
+            Publisher publisher = publisherRepository.findById(bookRequest.getPublisherId()).orElseThrow(() -> new AppExcpetion(ErrorCode.PUBLISHER_NOT_FOUND));
             book.setPublisher(publisher);
         }
         List<Category> categories = categoryRepository.findAllById(bookRequest.getCategoryIds());
         if(categories.size() != bookRequest.getCategoryIds().size()){
-            throw new RuntimeException("one or more categories not found");
+            throw new AppExcpetion(ErrorCode.CATEGORY_NOT_FOUND);
         }
         book.setCategories(categories);
         bookRepository.save(book);
@@ -96,7 +98,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBook(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(()->new RuntimeException("Book not found"));
+        Book book = bookRepository.findById(id).orElseThrow(()->new AppExcpetion(ErrorCode.BOOK_NOT_FOUND));
         book.setIsDeleted(true);
         bookRepository.save(book);
     }

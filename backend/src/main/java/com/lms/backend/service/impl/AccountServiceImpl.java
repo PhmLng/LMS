@@ -25,7 +25,6 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    private final AccountMapper accountMapper;
 
     @Override
     public Account CreateAccount(AccountRequest accountRequest) {

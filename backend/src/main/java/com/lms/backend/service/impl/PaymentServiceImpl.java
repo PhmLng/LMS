@@ -6,6 +6,8 @@ import com.lms.backend.entity.Fine;
 import com.lms.backend.entity.Payment;
 import com.lms.backend.enums.FineStatus;
 import com.lms.backend.enums.PaymentStatus;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.PaymentMapper;
 import com.lms.backend.repository.FineRepository;
 import com.lms.backend.repository.PaymentRepository;
@@ -29,7 +31,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional(rollbackFor = Exception.class)
     public PaymentResponse processPayment(Long readerId,PaymentRequest paymentRequest) {
         if (paymentRequest.getFineIds() == null || paymentRequest.getFineIds().isEmpty()) {
-            throw new RuntimeException("Danh sách khoản phạt không được để trống");
+            throw new AppExcpetion(ErrorCode.PAYMENT_LIST_MISSING);
         }
 
         List<Fine> fines = fineRepository.findAllById(paymentRequest.getFineIds());

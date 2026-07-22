@@ -8,6 +8,8 @@ import com.lms.backend.entity.LoanDetail;
 import com.lms.backend.entity.Renewal;
 import com.lms.backend.enums.RenewalStatus;
 import com.lms.backend.enums.SettingKey;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.BookMapper;
 import com.lms.backend.mapper.RenewalMapper;
 import com.lms.backend.repository.LoanDetailRepository;
@@ -67,21 +69,21 @@ public class RenewalServiceImpl implements RenewalService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createRenewalRequest(Long id, RenewalRequest renewalRequest) {
-        LoanDetail loanDetail = loanDetailRepository.findById(renewalRequest.getLoanDetailId()).orElseThrow(()->new RuntimeException("loanDetail not found"));
+        LoanDetail loanDetail = loanDetailRepository.findById(renewalRequest.getLoanDetailId()).orElseThrow(()->new AppExcpetion(ErrorCode.LOAN_DETAIL_NOT_FOUND));
         if (!loanDetail.getLoanSlip().getLibraryCard().getReader().getId().equals(id)) {
-            throw new RuntimeException("loanDetail does not belong to library card");
+            throw new AppExcpetion(ErrorCode.LOAN_DETAIL_NOT_OWNED);
         }
         if (renewalRepository.existsByLoanDetailIdAndStatus(renewalRequest.getLoanDetailId(), RenewalStatus.PENDING)) {
-            throw new RuntimeException("You are already pending renewal");
+            throw new AppExcpetion(ErrorCode.RENEWAL_ALREADY_PENDING);
         }
         int approvedCount = renewalRepository.countByLoanDetailIdAndStatus(renewalRequest.getLoanDetailId(), RenewalStatus.APPROVED);
         if (approvedCount >= Integer.parseInt(systemSettingService.getSettingValueDefault(SettingKey.MAX_RENEW_TIMES))){
-            throw new RuntimeException("You can not make a renewal for this book");
+            throw new AppExcpetion(ErrorCode.RENEWAL_LIMIT_EXCEEDED);
         }
         int maxMoth = Integer.parseInt(systemSettingService.getSettingValueDefault(SettingKey.MAX_RENEW_DURATION_MONTHS));
         if (renewalRequest.getRequestedDueDate().isBefore(loanDetail.getDueDate()) ||
                 renewalRequest.getRequestedDueDate().isAfter(loanDetail.getDueDate().plusMonths(maxMoth))) {
-            throw new RuntimeException("Ngày gia hạn không hợp lệ (Tối thiểu sau hạn cũ, tối đa 2 tháng)");
+            throw new AppExcpetion(ErrorCode.INVALID_RENEWAL_DATE);
         }
         Renewal renewal = new Renewal();
         renewal.setLoanDetail(loanDetail);
@@ -96,9 +98,9 @@ public class RenewalServiceImpl implements RenewalService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void processRenewal(ProcessRenewalRequest processRenewalRequest) {
-        Renewal renewal = renewalRepository.findById(processRenewalRequest.getRenewalId()).orElseThrow(()->new RuntimeException("renewal not found"));
+        Renewal renewal = renewalRepository.findById(processRenewalRequest.getRenewalId()).orElseThrow(()->new AppExcpetion(ErrorCode.RENEWAL_NOT_FOUND));
         if (renewal.getStatus() != RenewalStatus.PENDING) {
-            throw new RuntimeException("renewal status is not PENDING");
+            throw new AppExcpetion(ErrorCode.RENEWAL_ALREADY_PENDING);
         }
         if (processRenewalRequest.getAction() == RenewalStatus.APPROVED) {
             renewal.setStatus(RenewalStatus.APPROVED);
@@ -113,7 +115,7 @@ public class RenewalServiceImpl implements RenewalService {
 
     @Override
     public Page<RenewalResponse> getRenewals(RenewalStatus renewalStatus, Pageable pageable) {
-        Page<Renewal> renewals = renewalRepository.filterByStatus(renewalStatus,pageable).orElseThrow(()->new RuntimeException("renewals not found"));
+        Page<Renewal> renewals = renewalRepository.filterByStatus(renewalStatus,pageable).orElseThrow(()->new AppExcpetion(ErrorCode.RENEWAL_NOT_FOUND));
         Page<RenewalResponse> renewalResponses = renewals.map(renewal -> renewalMapper.toRenewalResponse(renewal) );
         return renewalResponses;
     }

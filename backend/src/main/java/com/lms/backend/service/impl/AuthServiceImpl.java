@@ -5,6 +5,8 @@ import com.lms.backend.entity.Account;
 import com.lms.backend.entity.InvalidatedToken;
 import com.lms.backend.entity.RefreshToken;
 import com.lms.backend.entity.Staff;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.AccountMapper;
 import com.lms.backend.repository.*;
 import com.lms.backend.security.JwtService;
@@ -34,10 +36,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(AuthRequest authRequest) {
-        Account account = accountRepository.findByUsername(authRequest.getUsername()).orElseThrow(() -> new RuntimeException("Account not found"));
+        Account account = accountRepository.findByUsername(authRequest.getUsername()).orElseThrow(() -> new AppExcpetion(ErrorCode.ACCOUNT_NOT_FOUND));
 
         if(!passwordEncoder.matches(authRequest.getPassword(), account.getPassword())) {
-            throw new RuntimeException("Wrong password");
+            throw new AppExcpetion(ErrorCode.INVALID_PASSWORD);
         }
         return AuthResponse.builder()
                 .accessToken(jwtService.generateAccessToken(account))
@@ -63,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
             invalidatedTokenRepository.save(invalidatedToken);
         }
 
-        RefreshToken refreshToken = refreshTokenRepository.findByToken(logoutRequest.getRefreshToken()).orElseThrow(() -> new RuntimeException("Refresh token not found"));
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(logoutRequest.getRefreshToken()).orElseThrow(() -> new AppExcpetion(ErrorCode.INVALID_REFRESH_TOKEN));
         if (refreshToken != null) {
             refreshTokenRepository.delete(refreshToken);
         }
@@ -72,10 +74,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public RefreshTokenResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
-        RefreshToken refreshToken = refreshTokenRepository.findByToken(refreshTokenRequest.getToken()).orElseThrow(() -> new RuntimeException("Refresh token not found"));
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(refreshTokenRequest.getToken()).orElseThrow(() -> new AppExcpetion(ErrorCode.INVALID_REFRESH_TOKEN));
 
         if (!refreshToken.getExpiryTime().toInstant().isAfter(Instant.now())) {
-            throw new RuntimeException("Refresh token expired");
+            throw new AppExcpetion(ErrorCode.INVALID_REFRESH_TOKEN);
         }
 
         String accessToken = jwtService.generateAccessToken(refreshToken.getAccount());

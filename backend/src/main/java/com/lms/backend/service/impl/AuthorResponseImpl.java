@@ -3,6 +3,8 @@ package com.lms.backend.service.impl;
 import com.lms.backend.dto.authorDto.AuthorRequest;
 import com.lms.backend.dto.authorDto.AuthorResponse;
 import com.lms.backend.entity.Author;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.AuthorMapper;
 import com.lms.backend.repository.AuthorRepository;
 import com.lms.backend.service.AuthorService;
@@ -27,7 +29,7 @@ public class AuthorResponseImpl implements AuthorService {
 
     @Override
     public AuthorResponse getAuthorById(Long id) {
-        Author author = authorRepository.findById(id).orElseThrow(()-> new RuntimeException("Author not found"));
+        Author author = authorRepository.findById(id).orElseThrow(()-> new AppExcpetion(ErrorCode.NOT_FOUND));
         return authorMapper.toAuthorResponse(author);
     }
 
@@ -40,7 +42,7 @@ public class AuthorResponseImpl implements AuthorService {
 
     @Override
     public AuthorResponse updateAuthor(Long id, AuthorRequest authorRequest) {
-        Author author = authorRepository.findById(id).orElseThrow(()-> new RuntimeException("Author not found"));
+        Author author = authorRepository.findById(id).orElseThrow(()-> new AppExcpetion(ErrorCode.NOT_FOUND));
         authorMapper.updateAuthor(author, authorRequest);
         authorRepository.save(author);
         return authorMapper.toAuthorResponse(author);

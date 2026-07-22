@@ -3,6 +3,8 @@ package com.lms.backend.service.impl;
 import com.lms.backend.dto.categoryDto.CategoryRequest;
 import com.lms.backend.dto.categoryDto.CategoryResponse;
 import com.lms.backend.entity.Category;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.CategoryMapper;
 import com.lms.backend.repository.CategoryRepository;
 import com.lms.backend.service.CategoryService;
@@ -30,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse getCategoryById(Long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(id).orElseThrow(()-> new AppExcpetion(ErrorCode.CATEGORY_NOT_FOUND));
         return categoryMapper.toCategoryResponse(category);
     }
 
@@ -44,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse updateCategory(Long id,CategoryRequest categoryRequest) {
-        Category category = categoryRepository.findById(id).orElseThrow(()-> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(id).orElseThrow(()-> new AppExcpetion(ErrorCode.CATEGORY_NOT_FOUND));
         categoryMapper.updateCategory(category,categoryRequest);
         categoryRepository.save(category);
         return categoryMapper.toCategoryResponse(category);

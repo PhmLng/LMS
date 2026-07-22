@@ -4,6 +4,8 @@ import com.lms.backend.dto.fineDto.FineResponse;
 import com.lms.backend.entity.Fine;
 import com.lms.backend.entity.LibraryCard;
 import com.lms.backend.enums.FineStatus;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.FineMapper;
 import com.lms.backend.repository.FineRepository;
 import com.lms.backend.repository.LibraryCardRepository;
@@ -30,7 +32,7 @@ public class FineServiceImpl implements FineService {
         Long readerId = null;
         if (cardCode != null && !cardCode.trim().isEmpty()) {
             LibraryCard libraryCard = libraryCardRepository.findByCardCode(cardCode)
-                    .orElseThrow(() -> new RuntimeException("card not found"));
+                    .orElseThrow(() -> new AppExcpetion(ErrorCode.CARD_NOT_FOUND));
             readerId = libraryCard.getReader().getId();
         }
 

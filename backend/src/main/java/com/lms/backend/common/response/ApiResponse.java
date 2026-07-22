@@ -1,7 +1,7 @@
 package com.lms.backend.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.lms.backend.enums.ErrorCode;
+import com.lms.backend.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

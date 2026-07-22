@@ -6,6 +6,8 @@ import com.lms.backend.dto.staffDto.StaffUpdateRequest;
 import com.lms.backend.entity.Account;
 import com.lms.backend.entity.Staff;
 import com.lms.backend.enums.AccountStatus;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.StaffMapper;
 import com.lms.backend.repository.StaffRepository;
 import com.lms.backend.service.StaffService;
@@ -45,7 +47,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void lockStaff(Long id) {
-        Staff staff = staffRepository.findById(id).orElseThrow(()->new RuntimeException("Staff not found"));
+        Staff staff = staffRepository.findById(id).orElseThrow(()->new AppExcpetion(ErrorCode.STAFF_NOT_FOUND));
         Account account = staff.getAccount();
         account.setStatus(AccountStatus.INACTIVE);
         staffRepository.save(staff);
@@ -53,7 +55,7 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void unlockStaff(Long id) {
-        Staff staff = staffRepository.findById(id).orElseThrow(()->new RuntimeException("Staff not found"));
+        Staff staff = staffRepository.findById(id).orElseThrow(()->new AppExcpetion(ErrorCode.STAFF_NOT_FOUND));
         Account account = staff.getAccount();
         account.setStatus(AccountStatus.ACTIVE);
         staffRepository.save(staff);

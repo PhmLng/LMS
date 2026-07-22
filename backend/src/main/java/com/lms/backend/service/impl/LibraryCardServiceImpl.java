@@ -6,6 +6,8 @@ import com.lms.backend.dto.libraryCard.LibraryCardUpdateRequest;
 import com.lms.backend.entity.LibraryCard;
 import com.lms.backend.entity.Reader;
 import com.lms.backend.enums.CardStatus;
+import com.lms.backend.exception.AppExcpetion;
+import com.lms.backend.exception.ErrorCode;
 import com.lms.backend.mapper.LibraryCardMapper;
 import com.lms.backend.repository.LibraryCardRepository;
 import com.lms.backend.repository.ReaderRepository;
@@ -28,7 +30,7 @@ public class LibraryCardServiceImpl implements LibraryCardService {
     public Page<LibraryCardResponse> getLibraryCards(CardStatus cardStatus,Pageable pageable) {
         Page<LibraryCard> libraryCards;
         if ((cardStatus !=null)){
-            libraryCards = libraryCardRepository.findAllByStatus(cardStatus,pageable).orElseThrow(()->new RuntimeException(cardStatus+" is not found"));
+            libraryCards = libraryCardRepository.findAllByStatus(cardStatus,pageable).orElseThrow(()->new AppExcpetion(ErrorCode.CARD_NOT_FOUND));
         }
         else {
             libraryCards = libraryCardRepository.findAll(pageable);
@@ -39,13 +41,13 @@ public class LibraryCardServiceImpl implements LibraryCardService {
 
     @Override
     public LibraryCardResponse getLibraryCardById(Long id) {
-        LibraryCard libraryCard = libraryCardRepository.findById(id).orElseThrow(()-> new RuntimeException("No library card found with id"));
+        LibraryCard libraryCard = libraryCardRepository.findById(id).orElseThrow(()-> new AppExcpetion(ErrorCode.CARD_NOT_FOUND));
         return libraryCardMapper.toLibraryCardResponse(libraryCard);
     }
 
     @Override
     public LibraryCardResponse getLibraryCardByCardCode(String cardCode) {
-        LibraryCard libraryCard = libraryCardRepository.findByCardCode(cardCode).orElseThrow(() -> new RuntimeException("Card is not found"));
+        LibraryCard libraryCard = libraryCardRepository.findByCardCode(cardCode).orElseThrow(() -> new AppExcpetion(ErrorCode.CARD_NOT_FOUND));
         return libraryCardMapper.toLibraryCardResponse(libraryCard);
     }
 
@@ -58,7 +60,7 @@ public class LibraryCardServiceImpl implements LibraryCardService {
         }
         else {
             if (libraryCardRepository.existsByCardCode(libraryCardRequest.getCardCode())) {
-                throw new RuntimeException("card code already exists");
+                throw new AppExcpetion(ErrorCode.CARD_EXISTED);
             }
         }
 //        Reader reader = readerRepository.findById(libraryCardRequest.getReaderId()).orElseThrow(()->new RuntimeException("reader not found"));
@@ -69,7 +71,7 @@ public class LibraryCardServiceImpl implements LibraryCardService {
 
     @Override
     public LibraryCardResponse updateLibraryCard(Long id,LibraryCardUpdateRequest libraryCardUpdateRequest) {
-        LibraryCard libraryCard = libraryCardRepository.findById(id).orElseThrow(()->new RuntimeException("No library card found with id"));
+        LibraryCard libraryCard = libraryCardRepository.findById(id).orElseThrow(()->new AppExcpetion(ErrorCode.CARD_NOT_FOUND));
         libraryCardMapper.updateLibraryCard(libraryCard,libraryCardUpdateRequest);
         return libraryCardMapper.toLibraryCardResponse(libraryCard);
     }
